@@ -1,13 +1,25 @@
-//d3.csv('url of github raw').then(function(data))
 
-//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/cut%20version%20of%20data%20copy.csv?token=AKBP7R3QKCOUWM4XD64GIOC5566HW").then(function(data){});
 
-d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/cut%20version%20of%20data%20copy.csv?token=AKBP7R435RLSEQEB4PCXRFK557JXG",function(data) {
-	console.log(data[0]);
+d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/testtt.csv?token=AKBP7R5JGOFZWUM4B5N4BUK57AAWA",function(data) {
+
+
+
+
+
+  var headerNames = d3.keys(data[0]);
+  var check = headerNames[5];
+
+
+ var col2data = data.map(function(d) { return d[check] });
+
+
+console.log(headerNames); 
+  console.log(check); // outputs: ['aaa2', 'bbb2', 'ccc2']
+
+  console.log(col2data);
+
+
+
+
 });
-
-//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/cut%20version%20of%20data%20copy.csv?token=AKBP7R3QKCOUWM4XD64GIOC5566HW").then(function(data) {
- // console.log(data[0]);
-
-//});
 
