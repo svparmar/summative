@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
+
+
+  <select id="dropdown"></select>
+
+  
 <script src="https://d3js.org/d3.v3.js"></script>
 <script src="csvSUM.js"></script>
 <!-- <script src="untitled.js"></script> -->
@@ -33,7 +38,7 @@ var width = 1060,
 
 
 
-var nodes = d3.range(200).map(function() { return {radius: Math.random() * 12 + 10}; }),
+var nodes = d3.range(8).map(function() { return {radius: Math.random() * 12 + 10}; }),
     root = nodes[0],
     color = d3.scale.category10();
 
