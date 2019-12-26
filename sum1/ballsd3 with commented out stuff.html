@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+
+
+  <select id="dropdown"></select>
+
+ 
+
+  
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="csvSUM.js"></script> -->
+<!-- <script src="untitled.js"></script> -->
+<script>
+
+//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/testtt.csv",function(data) {
+
+//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve.csv",function(data) {
+d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
+const selector = document.getElementById("dropdown");
+
+
+var yeargases2;
+//all 7 gas colours + total at the end
+
+
+  var headerNames = d3.keys(data[0]);
+  var check = headerNames[0];
+
+
+ var col2data = data.map(function(d) { return d[check] });
+
+console.log('headerNames'); 
+console.log(headerNames); 
+  
+console.log('specific year'); 
+  console.log(check); // outputs: ['aaa2', 'bbb2', 'ccc2']
+
+  console.log('col222'); 
+  console.log(col2data);
+
+
+//taken from
+//https://www.d3-graph-gallery.com/graph/line_select.html
+d3.select("#dropdown")
+    .selectAll('myOptions')
+    .data(headerNames)
+        .enter()
+        .append('option')
+        .text(function (d) { return d; }) 
+        .attr("value", function (dropdowndata) { return dropdowndata; })
+        
+
+
+
+function runSVG(){
+
+
+d3.select("#dropdown").on("change",function(d){
+
+          var yeardata = d3.select(this).property('value');
+
+        console.log('yeardataaaaa');
+        console.log(yeardata);
+
+     
+     //var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
+     var colors = ['#ff0000',"#ffa500",'#ffff00', '#008000',"#0000ff","#4b0082"];
+
+  var yeargases = (data.map(function(d) { return d[yeardata] }));
+ console.log('yeargases');
+ console.log(yeargases);
+
+
+
+  var numballs = 0;
+  var newestartingpoint=0;
+  var numballs2 = 0
+  var newcolours = [];
+  var counter=0;
+
+ // console.log('running for loop');
+  var newnodenum = [];
+  //var numballs;
+
+ // for (i = 0; i < yeargases.length; i++) {
+    
+     // yeargases[i] = parseInt(yeargases[i]);
+     // numballs = (yeargases[i]/10) ;//+ numballs; //+ numballs;
+     // numballs2 = numballs2+numballs;
+    
+
+
+//}
+
+//numballs=0;
+//var sampler=0;
+//var samplerarray=[];
+var count=0;
+
+
+var totaltotal=0;
+var testarray=[];
+var arraytruth =[false,false,false,false,false];
+
+  for (i = 0; i < yeargases.length; i++) {
+    
+      console.log(yeargases[i]);
+
+
+      yeargases[i] = parseInt(yeargases[i]);
+     // numballs = (yeargases[i]/10) ;//+ numballs; //+ numballs;
+     if (yeargases[i]<1) {
+
+      testarray.push(yeargases[i]+3);
+    // totaltotal = totaltotal+yeargases[i]+3;
+      console.log('INHERE');
+      arraytruth[i] = true;
+     }
+
+     else{
+      testarray.push(yeargases[i]);
+      totaltotal = totaltotal+Math.ceil(yeargases[i]);
+     }
+     //numballs2 = numballs2+numballs;
+    //  for (j = 0; j < numballs; j++) {
+
+      //  newnodenum.push(yeargases[i]);
+        //newcolours.push(colors[counter])
+
+
+
+    //  }
+
+      
+
+      //counter = counter +1;
+
+
+}
+     //totaltotal= Math.ceil(yeargases[0]+yeargases[1]+yeargases[2]+yeargases[3]+yeargases[4]+yeargases[5]);
+
+
+      // var calculation0 = ((Math.ceil(testarray[0])+100)/totaltotal)*10;
+      // var calculation1 = ((Math.ceil(testarray[1])+100)/totaltotal)*10;
+      // var calculation2 = ((Math.ceil(testarray[2])+100)/totaltotal)*10;
+      // var calculation3 = ((Math.ceil(testarray[3])+100)/totaltotal)*10;
+      // var calculation4 = ((Math.ceil(testarray[4])+100)/totaltotal)*10;
+      // var calculation5 = ((Math.ceil(testarray[5])+100)/totaltotal)*10;
+
+      //CALCULATING AMOUNT OF BALLS FOR EACH GAS
+      var calculation0 = Math.ceil(((testarray[0]*5)/totaltotal)*5);
+      var calculation1 = Math.ceil(((testarray[1]*5)/totaltotal)*5);
+      var calculation2 = Math.ceil(((testarray[2]*5)/totaltotal)*5);
+      var calculation3 = Math.ceil(((testarray[3]*5)/totaltotal)*5);
+      var calculation4 = Math.ceil(((testarray[4]*5)/totaltotal)*5);
+      var calculation5 = Math.ceil(((testarray[5]*5)/totaltotal)*5);
+
+      console.log(calculation0);
+      console.log(calculation1);
+      console.log(calculation2);
+         console.log(calculation3);
+      console.log(calculation4);
+      console.log(calculation5);
+
+
+      var total = calculation5+calculation4+calculation3+calculation2+calculation1+calculation0;
+
+      var newarayyyy=[];
+
+      // newarayyyy.push(10);
+      // newarayyyy.push(10);
+      // newarayyyy.push(10);
+      // newarayyyy.push(10);
+      // newarayyyy.push(10);
+      // newarayyyy.push(10);
+
+      newarayyyy.push(calculation0);
+      newarayyyy.push(calculation1);
+      newarayyyy.push(calculation2);
+      newarayyyy.push(calculation3);
+      newarayyyy.push(calculation4);
+      newarayyyy.push(calculation5);
+      // for (i = 0; i < yeargases.length; i++) {
+      //     if (arraytruth[i]==true) {
+
+      //       newarayyyy[i]=newarayyyy[i]+1;
+
+      //     }
+      // }
+       
+
+      console.log("total");
+      console.log(total);
+
+      console.log('newnodenum');
+      console.log(newnodenum);
+  testarray[0] = testarray[0]/10;
+  testarray[1]=testarray[1]/10*2+25;
+  testarray[2]=testarray[2]/10*5+20;
+  testarray[3]=testarray[3]/10*4+15;
+  testarray[4]=testarray[4]*6+10;
+  testarray[5]=testarray[5]*5+5;
+        console.log('newnodenum');
+      console.log(newnodenum);
+
+
+ for (i = 0; i < yeargases.length; i++) {
+    
+     // console.log(yeargases[i]);
+
+
+      yeargases[i] = parseInt(yeargases[i]);
+      numballs = (newarayyyy[i]) ;//+ numballs; //+ numballs;
+      //if (yeargases[i]<=1) {numballs = newarayyyy[i] + 1; console.log('TRUE');}
+
+      
+     // console.log('numballs in for loop');
+//console.log(numballs);
+
+     // testarray.push(yeargases[i]);
+
+     //numballs2 = numballs2+numballs;
+      for (j = 0; j < numballs; j++) {
+
+       // console.log('jjjjjjjjjjj');
+      //
+      //  console.log(j);
+
+        newnodenum.push(testarray[i]);
+        newcolours.push(colors[counter]);
+        
+
+
+      }
+
+    //  console.log( "newcolours.push(colors[counter])");
+   //   console.log( newcolours);
+      counter = counter +1;
+
+
+}
+
+      
+       console.log('totaltotal');
+
+        console.log(totaltotal);
+//       console.log('total');
+//        console.log(total);
+//         console.log(calculation0);
+//          console.log(total);
+// //console.log('numballs');
+// //console.log(numballs);
+ console.log('testarray');
+ console.log(testarray);
+//       console.log('newnodenum');
+//       console.log(newnodenum);
+//       console.log(newcolours);
+
+// console.log('newarayyyy');
+// console.log(newarayyyy);
+
+
+
+var orignal = newnodenum[0];
+
+
+ 
+var teast2 = newnodenum;
+ console.log('teast2')
+  console.log(teast2)
+
+//var teast=[596.3, 132.5, 48.2, 14.4, 1.7, 1.3, 0, 794.4];
+ // console.log(teast)
+
+var testing = d3.scale.ordinal()
+  .range(teast2);
+
+var color = d3.scale.ordinal()
+  .range(newcolours);
+//var nodes = d3.range(30).map(function(d) { return {radius: d*1}; });
+
+console.log("STARTING SVG STARTING SVG STARTING SVG");
+svg.selectAll("circle")
+    .data(nodes.slice(1))
+
+
+  .enter().append("circle")
+
+  // .attr("r", function(d) { console.log('RUNNING attr');console.log(d);return d.radius; })
+
+  // .attr("r",teast[1])
+   //.attr("r",teast[2])
+   //.attr("r",teast[3])
+
+   .attr("r",function(d) {return testing(d.index); })//20)//
+
+    .attr("fill", function(d) {
+     // console.log(color(d.index))
+      return color(d.index);  });
+
+    });
+trrr();
+runforce();
+}
+//from https://codepen.io/tarsusi/pen/reovOV
+// d3.select("#dropdown").on("change",function(d){
+
+//           var dropdowndatainput = d3.select(this).property('value');
+
+//         console.log(dropdowndatainput);
+
+//        //createdataballs(dropdowndatainput);
+      
+//           });
+
+
+// function createdataballs(yeardata){
+
+
+//   console.log('running yeardata');
+//   console.log(yeardata);
+
+
+
+//   var yeargases = (data.map(function(d) { return d[yeardata] }));
+//  console.log('yeargases');
+
+
+  
+//   console.log('running for loop');
+//   for (i = 0; i < yeargases.length; i++) {
+    
+//       console.log(yeargases[i]);
+
+
+//       yeargases[i] = parseInt(yeargases[i]);
+
+// }
+
+// }
+
+
+
+  function reassignment(){
+
+    console.log('running reassignment');
+ // console.log('yeargases2 HERE 2');
+  //console.log(yeargases2);
+
+
+  }
+  //let list1  = new help(yeargases);
+  //list1.setNode();
+
+ // console.log('list1');
+ // console.log(list1);
+
+
+
+//var list2= new help(list2);
+
+//list2.getValue();
+//reassignment();
+
+
+
+//SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW
+
+
+var width = 1060,
+    height = 720;
+
+
+
+
+ // var nodes = d3.range(20).map(function(d) { return {radius: d*2.5}; });
+var nodes = d3.range(30).map(function() { return {radius: Math.random() * 10 + 45}; })
+
+
+    console.log('nodes');
+ //   console.log(nodes);
+
+//var nodes = [{radius: 10}, {radius: 20}, {radius: 30}, {radius: 40}, {radius: 50}, {radius: 60}, {radius: 70}, {radius: 80}];
+
+var root = nodes[0];
+    
+
+//var colors = ["#DCDCDC","#C0C0C0","#989898","#787878","#606060","#404040","#282828","#080808"];
+var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
+var color = d3.scale.ordinal()
+  .range(colors);
+
+
+
+root.radius = 0;
+root.fixed = true;
+
+var force = d3.layout.force()
+    .gravity(0.05)
+    .charge(function(d, i) { return i ? 0 : -2000; })
+    .nodes(nodes)
+    .size([width, height]);
+
+force.start();
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+
+runSVG();
+
+function runforce(){
+
+force.on("tick", function(e) {
+  var q = d3.geom.quadtree(nodes),
+      i = 0,
+      n = nodes.length;
+
+  while (++i < n) q.visit(collide(nodes[i]));
+
+  svg.selectAll("circle")
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+});
+
+svg.on("mousemove", function() {
+  var p1 = d3.mouse(this);
+  root.px = p1[0];
+  root.py = p1[1];
+  force.resume();
+});
+
+function collide(node) {
+  var r = node.radius + 16,
+      nx1 = node.x - r,
+      nx2 = node.x + r,
+      ny1 = node.y - r,
+      ny2 = node.y + r;
+  return function(quad, x1, y1, x2, y2) {
+    if (quad.point && (quad.point !== node)) {
+      var x = node.x - quad.point.x,
+          y = node.y - quad.point.y,
+          l = Math.sqrt(x * x + y * y),
+          r = node.radius + quad.point.radius;
+      if (l < r) {
+        l = (l - r) / l * .5;
+        node.x -= x *= l;
+        node.y -= y *= l;
+        quad.point.x += x;
+        quad.point.y += y;
+      }
+    }
+    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+  };
+}
+}
+
+
+function trrr(){
+
+
+  var nodes = d3.range(30).map(function() { return {radius: Math.random() * 12 + 50}; })
+
+
+    console.log('nodes');
+ //   console.log(nodes);
+
+//var nodes = [{radius: 10}, {radius: 20}, {radius: 30}, {radius: 40}, {radius: 50}, {radius: 60}, {radius: 70}, {radius: 80}];
+
+var root = nodes[0];
+    
+
+//var colors = ["#DCDCDC","#C0C0C0","#989898","#787878","#606060","#404040","#282828","#080808"];
+var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
+var color = d3.scale.ordinal()
+  .range(colors);
+
+
+
+root.radius = 0;
+root.fixed = true;
+
+var force = d3.layout.force()
+    .gravity(0.05)
+    .charge(function(d, i) { return i ? 0 : -2000; })
+    .nodes(nodes)
+    .size([width, height]);
+
+force.start();
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+}
+
+});
+
+</script>
