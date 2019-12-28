@@ -4,338 +4,217 @@
 
 <head>
   <style>
-    
 * {
-  box-sizing: border-box;
-}
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
+  box-sizing: border-box;}
 
-  /* Style the header */
-header {
-  /*background-color: #000000;*/
-  /*padding: 0.0001px;*/
+body {
+    font-family: Arial;}
+
+h1 {
   text-align: center;
-  font-size: 10px;
-  color: black;
-}
+  font-size: 16px;
+  color: black;}
 
-/* Create two columns/boxes that floats next to each other */
 nav {
   float: left;
   width: 20%;
-  height: 300px; /* only for demonstration, should be removed */
+  height: 300px; 
   background: #ffffff;
-  padding: 20px;
-}
+  padding: 20px;}
 
-/* Style the list inside the menu */
 nav ul {
   list-style-type: none;
-  padding: 0;
-}
+  padding: 0;}
 
 svg {
   float: left;
   padding: 0px;
-  /*width: 70%;*/
   width:1135px;
   height :740px;
-  background-color: #000000;
-  /*height: 300px;  only for demonstration, should be removed */
-}
-
-/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+  background-color: #000000;}
   </style>
 </head>
 
-
 <body>
-<header>
-  <h2>UK Gas Concentration 1993-2017</h2>
-</header>
-
+  <h1>UK Gas Concentration 1993-2017</h1>
 <section>
   <nav>
     <select id="dropdown"></select>
     <ul>  
-      <!-- ['#ff0000',"#ffa500",'#ffff00', '#008000',"#0000ff","#4b0082"]; -->
+      <br>
       <li><a>Carbon Dioxide (CO2)</a></li>
-      <li><a id="co2" style="color:#ff0000;">value</a></li>
-
+      <li><a id="co2" style="color:#ff0000;">value</a></li><br>
        <li><a>Methane (CH4)</a></li>
-        <li><a id="ch4" style="color:#ffa500;">value</a></li>
+        <li><a id="ch4" style="color:#ffa500;">value</a></li><br>
       <li><a>Nitrous Oxide (N2O)</a></li>
-       <li><a id="n2o" style="color:#FFC0EB;">value</a></li>
+       <li><a id="n2o" style="color:#FFC0EB;">value</a></li><br>
       <li><a>Hydrofluorocarbons (HFCs)</a></li>
-       <li><a id="hfc" style="color:#008000;">value</a></li>
-
+       <li><a id="hfc" style="color:#008000;">value</a></li><br>
       <li><a>Perfluorocarbons (PFCs)</a></li>
-       <li><a id="pfc" style="color:#0000ff;">value</a></li>
-
+       <li><a id="pfc" style="color:#0000ff;">value</a></li><br>
       <li><a>Sulfur Hexafluoride (SF6)</a></li>
-      <li><a id="sf6" style="color:#4b0082;">value</a></li>
-
-
+      <li><a id="sf6" style="color:#4b0082;">value</a></li><br>
     </ul>
   </nav>
-  
 </section>
   
 <script src="https://d3js.org/d3.v3.js"></script>
-<!-- <script src="csvSUM.js"></script> -->
-<!-- <script src="untitled.js"></script> -->
 <script>
 
-//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/testtt.csv",function(data) {
+//function wholeprog(){
+class ballMaker{
+      constructor(year,yeargasess){
+    this.year = year;
+    this.yeargasess = yeargasess; }
 
-//d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve.csv",function(data) {
-d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
-const selector = document.getElementById("dropdown");
+    runSVG() {
 
+      console.log('RUNNING SVG');
+      console.log(this.yeargasess);
 
-var yeargases2;
-//all 7 gas colours + total at the end
-
-
-  var headerNames = d3.keys(data[0]);
-  console.log(headerNames);
-  var check = headerNames[0];
-
-
- var col2data = data.map(function(d) { return d[check] });
-
-console.log('headerNames'); 
-console.log(headerNames); 
-  
-console.log('specific year'); 
-  console.log(check); // outputs: ['aaa2', 'bbb2', 'ccc2']
-
-  console.log('col222'); 
-  console.log(col2data);
-
-
-//taken from
-//https://www.d3-graph-gallery.com/graph/line_select.html
-d3.select("#dropdown")
-    .selectAll('myOptions')
-    .data(headerNames)
-        .enter()
-        .append('option')
-        .text(function (d) { return d; }) 
-        .attr("value", function (dropdowndata) { return dropdowndata; })
-
-
-function runSVG(){
-console.log('RUNNING SVG');
-
-//from https://codepen.io/tarsusi/pen/reovOV
-d3.select("#dropdown").on("change",function(d){
-  console.log('selecteddddddddddddd');
-
-  //d3.select("#selected-dropdown").text(selected);
-
-    var yeardata = d3.select(this).property('value');
-
-  //   var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8',"#989898","#606060","#000000"];
+      d3.select('#co2').text(this.yeargasess[0]);
+    document.getElementById("co2").style.fontWeight = "bold";
+    d3.select('#ch4').text(this.yeargasess[1]);
+    document.getElementById("ch4").style.fontWeight = "bold";
+    d3.select('#n2o').text(this.yeargasess[2]);
+    document.getElementById("n2o").style.fontWeight = "bold";
+    d3.select('#hfc').text(this.yeargasess[3]);
+    document.getElementById("hfc").style.fontWeight = "bold";
+    d3.select('#pfc').text(this.yeargasess[4]);
+    document.getElementById("pfc").style.fontWeight = "bold";
+    d3.select('#sf6').text(this.yeargasess[5]);
+    document.getElementById("sf6").style.fontWeight = "bold";
+    
     var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
 
-  var yeargases = (data.map(function(d) { return d[yeardata] }));
-                                     // .attr("fill", function(d) {return color(d.index);  })
-
-  d3.select('#co2').text(yeargases[0]);
-  document.getElementById("co2").style.fontWeight = "bold";
-  d3.select('#ch4').text(yeargases[1]);
-  document.getElementById("ch4").style.fontWeight = "bold";
-  d3.select('#n2o').text(yeargases[2]);
-  document.getElementById("n2o").style.fontWeight = "bold";
-  d3.select('#hfc').text(yeargases[3]);
-  document.getElementById("hfc").style.fontWeight = "bold";
-  d3.select('#pfc').text(yeargases[4]);
-  document.getElementById("pfc").style.fontWeight = "bold";
-  d3.select('#sf6').text(yeargases[5]);
-  document.getElementById("sf6").style.fontWeight = "bold";
-
-  var numballs = 0;
-  var newestartingpoint=0;
-  var numballs2 = 0;
+      var numballs = 0;
   var newcolours = [];
   var counter=0;
   var newnodenum = []; 
 
-  var count=0;
-
-
   var totaltotal=0;
   var testarray=[];
-  //var arraytruth =[false,false,false,false,false];
-
-  for (i = 0; i < yeargases.length; i++)
+  
+  for (var i = 0; i < this.yeargasess.length; i++)
   {
-    
-    //  console.log(yeargases[i]);
-
-
-      yeargases[i] = parseInt(yeargases[i]);
-     // numballs = (yeargases[i]/10) ;//+ numballs; //+ numballs;
-     if (yeargases[i]<1)
+      this.yeargasess[i] = Math.ceil(this.yeargasess[i]);
+      
+     if (this.yeargasess[i]<1)
      {
-
-        testarray.push(yeargases[i]+3);
-      // totaltotal = totaltotal+yeargases[i]+3;
-      //  console.log('INHERE');
-        //arraytruth[i] = true;
+        testarray.push(this.yeargasess[i]+3);
      }
 
      else
      {
-      testarray.push(yeargases[i]);
-      totaltotal = totaltotal+Math.ceil(yeargases[i]);
+      testarray.push(this.yeargasess[i]);
+      totaltotal = totaltotal+Math.ceil(this.yeargasess[i]);
      }
-  
   }
-    
-
       //CALCULATING AMOUNT OF BALLS FOR EACH GAS
-      var calculation0 = Math.ceil(((testarray[0]*5)/totaltotal)*5);
-      var calculation1 = Math.ceil(((testarray[1]*5)/totaltotal)*5);
-      var calculation2 = Math.ceil(((testarray[2]*5)/totaltotal)*5);
-      var calculation3 = Math.ceil(((testarray[3]*5)/totaltotal)*5);
-      var calculation4 = Math.ceil(((testarray[4]*5)/totaltotal)*5);
-      var calculation5 = Math.ceil(((testarray[5]*5)/totaltotal)*5);
-
-      var total = calculation5+calculation4+calculation3+calculation2+calculation1+calculation0;
-
       var newarayyyy=[];
+      newarayyyy.push(Math.ceil(((testarray[0]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[1]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[2]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[3]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[4]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[5]*5)/totaltotal)*5));
 
-
-      newarayyyy.push(calculation0);
-      newarayyyy.push(calculation1);
-      newarayyyy.push(calculation2);
-      newarayyyy.push(calculation3);
-      newarayyyy.push(calculation4);
-      newarayyyy.push(calculation5);
+      var total= newarayyyy[0]+newarayyyy[1]+newarayyyy[2]+newarayyyy[3]+newarayyyy[4]+newarayyyy[5];
      
       testarray[0] = testarray[0]/10;
       testarray[1]=testarray[1]/10*2+25;
       testarray[2]=testarray[2]/10*5+20;
       testarray[3]=testarray[3]/10*4+20;
 
+      if (this.yeargasess[4]<this.yeargasess[5]) {
+        console.log('purple is bigger than blue')
+        testarray[5]=testarray[5]+10;
+        testarray[4]=testarray[4]+5;
+      }
 
-      if (yeargases[4]<yeargases[5]) {
-
-        
-      testarray[5]=testarray[5]*4+10;
-      testarray[4]=testarray[4]+5;
+      else if (this.yeargasess[4]==this.yeargasess[5]) {
+        console.log('purple is equal to blue')
+        testarray[5]=testarray[5]+10;
+        testarray[4]=testarray[4]+10;
       }
 
       else{
-        console.log('TUREUTRUERUE')
-        testarray[4]=testarray[4]*4+10;
-      testarray[5]=testarray[5]+5;
+        console.log('blue is bigger than purple');
+        testarray[4]=testarray[4]+10;
+        testarray[5]=testarray[5]+5;
       }
-      
-   //     console.log('newnodenum');
-   //   console.log(newnodenum);
-
-
- for (i = 0; i < yeargases.length; i++)
+  
+ for (i = 0; i < this.yeargasess.length; i++)
  {
-    
-     // console.log(yeargases[i]);
+      this.yeargasess[i] = parseInt(this.yeargasess[i]);
+      numballs = (newarayyyy[i]) ;
 
-      yeargases[i] = parseInt(yeargases[i]);
-      numballs = (newarayyyy[i]) ;//+ numballs; //+ numballs;
-
-      for (j = 0; j < numballs; j++)
+      for (var j = 0; j < numballs; j++)
       {
-
         newnodenum.push(testarray[i]);
         newcolours.push(colors[counter]);
-
       }
-
       counter = counter +1;
   }
-
-  var orignal = newnodenum[0];
-
-  var teast2 = newnodenum;
- //console.log('teast2')
- // console.log(teast2)
-
-//var teast=[596.3, 132.5, 48.2, 14.4, 1.7, 1.3, 0, 794.4];
- // console.log(teast)
-
-  var testing = d3.scale.ordinal().range(teast2);
-
+  
+  var testing = d3.scale.ordinal().range(newnodenum);
   var color = d3.scale.ordinal().range(newcolours);
-  //var nodes = d3.range(30).map(function(d) { return {radius: d*1}; });
-
   
-  function changingradi()
-  {
+function changingradi(){
     console.log(' runningi changingradi');
-//   var svg = d3.select("body").append("svg")
- //   .attr("width", width)
- //   .attr("height", height);
- //var svg = d3.select("body");
- //svg.selectAll("*").remove();
- console.log(' DELETING SVG');
- var svg1=d3.select("svg").remove();
 
-console.log(' ADDING SVG');
- svg = d3.select("body").append("svg")
- .attr("width", width)
-    .attr("height", height);
-  svg.selectAll("circle")
-  
-     .data(nodes.slice(1))
+   console.log(' DELETING SVG');
+   var svg1=d3.select("svg").remove();
 
-  
-  .enter().append("circle")
-
-   .attr("r",function(d) {
-    console.log('chaning radi');
-   return testing(d.index); })//20)//
-    .attr("fill", function(d) {
-  return color(d.index);  })
-    
+  // console.log(' ADDING new SVG');
+  //  svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
+  // svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return testing(d.index); }).attr("fill", function(d) {return color(d.index);  })
 
 }
-changingradi()
- trrr();
-  runforce();
-  rerun();
+  changingradi();
+  runforce(testing,color);
+
+  }
+}
+ 
+
+d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
+const selector = document.getElementById("dropdown");
+
+  var headerNames = d3.keys(data[0]);
+  headerNames.splice(0,0,'Year');
+  headerNames.pop();
+
+  console.log('headerNames'); 
+  console.log(headerNames); 
+  
+
+//taken from https://www.d3-graph-gallery.com/graph/line_select.html
+d3.select("#dropdown")
+    .selectAll('myOptions')
+    .data(headerNames)
+    .enter().append('option').text(function (d) { return d; }) 
+    .attr("value", function (dropdowndata) { return dropdowndata; })
+
+d3.select("#dropdown").on("change",function(d){
+var yeardata = d3.select(this).property('value');
+var yeargases = (data.map(function(d) { return d[yeardata] }));
+var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
+console.log(yeardata);
+
+
+let b = new ballMaker(yeardata , yeargases);
+b.runSVG();
 
 });
- // trrr();
- //  runforce();
-}
-
-function rerun(){
-console.log('rerunnning rerun');
-  var width = 1060,
-    height = 720;
+});
 
 
- // var nodes = d3.range(20).map(function(d) { return {radius: d*2.5}; });
-var nodes = d3.range(30).map(function() { return {radius: Math.random() * 10 + 45}; })
+function runforce(gasSize,colour){
 
-
-//var nodes = [{radius: 10}, {radius: 20}, {radius: 30}, {radius: 40}, {radius: 50}, {radius: 60}, {radius: 70}, {radius: 80}];
-
+  console.log('running runforce');
+var nodes = d3.range(31).map(function() { return {radius: Math.random() * 12 + 50}; });
 var root = nodes[0];
-    
-
-//var colors = ["#DCDCDC","#C0C0C0","#989898","#787878","#606060","#404040","#282828","#080808"];
-var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
-var color = d3.scale.ordinal()
-  .range(colors);
-
-
-
 root.radius = 0;
 root.fixed = true;
 
@@ -343,141 +222,57 @@ var force = d3.layout.force()
     .gravity(0.05)
     .charge(function(d, i) { return i ? 0 : -2000; })
     .nodes(nodes)
-    .size([width, height]);
+    .size([1060, 720]);
 
 force.start();
 
+//console.log(' ADDING SVG');
+var svg;// = d3.select("body").append("svg").attr("width", width).attr("height", height);
 
-var svg; //= d3.select("body").append("svg")
-    //.attr("width", width)
-  //  .attr("height", height);
-}
-
-
-//SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW
+console.log(' ADDING new SVG');
+   svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
+  svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return gasSize(d.index); }).attr("fill", function(d) {return colour(d.index);  })
 
 
-var width = 1060,
-    height = 720;
+  force.on("tick", function(e) {
+    var q = d3.geom.quadtree(nodes), i = 0, n = nodes.length;
 
+    while (++i < n) q.visit(collide(nodes[i]));
 
- // var nodes = d3.range(20).map(function(d) { return {radius: d*2.5}; });
-var nodes = d3.range(30).map(function() { return {radius: Math.random() * 10 + 45}; })
+    svg.selectAll("circle")
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
 
+  svg.on("mousemove", function() {
+    var p1 = d3.mouse(this);
+    root.px = p1[0];
+    root.py = p1[1];
+    force.resume();});
 
-//var nodes = [{radius: 10}, {radius: 20}, {radius: 30}, {radius: 40}, {radius: 50}, {radius: 60}, {radius: 70}, {radius: 80}];
-
-var root = nodes[0];
-    
-
-//var colors = ["#DCDCDC","#C0C0C0","#989898","#787878","#606060","#404040","#282828","#080808"];
-var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
-var color = d3.scale.ordinal()
-  .range(colors);
-
-
-
-root.radius = 0;
-root.fixed = true;
-
-var force = d3.layout.force()
-    .gravity(0.05)
-    .charge(function(d, i) { return i ? 0 : -2000; })
-    .nodes(nodes)
-    .size([width, height]);
-
-force.start();
-
-console.log(' ADDING SVG');
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-
-runSVG();
-
-function runforce(){
-
-console.log('running runforce');
-
-force.on("tick", function(e) {
-  var q = d3.geom.quadtree(nodes),
-      i = 0,
-      n = nodes.length;
-
-  while (++i < n) q.visit(collide(nodes[i]));
-
-  svg.selectAll("circle")
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-});
-
-svg.on("mousemove", function() {
-  var p1 = d3.mouse(this);
-  root.px = p1[0];
-  root.py = p1[1];
-  force.resume();
-});
-
-function collide(node) {
-  var r = node.radius + 16,
-      nx1 = node.x - r,
-      nx2 = node.x + r,
-      ny1 = node.y - r,
-      ny2 = node.y + r;
-  return function(quad, x1, y1, x2, y2) {
-    if (quad.point && (quad.point !== node)) {
-      var x = node.x - quad.point.x,
-          y = node.y - quad.point.y,
-          l = Math.sqrt(x * x + y * y),
-          r = node.radius + quad.point.radius;
-      if (l < r) {
-        l = (l - r) / l * .5;
-        node.x -= x *= l;
-        node.y -= y *= l;
-        quad.point.x += x;
-        quad.point.y += y;
+  function collide(node) {
+    var r = node.radius + 16,
+        nx1 = node.x - r,
+        nx2 = node.x + r,
+        ny1 = node.y - r,
+        ny2 = node.y + r;
+    return function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== node)) {
+        var x = node.x - quad.point.x,
+            y = node.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = node.radius + quad.point.radius;
+        if (l < r) {
+          l = (l - r) / l * .5;
+          node.x -= x *= l;
+          node.y -= y *= l;
+          quad.point.x += x;
+          quad.point.y += y;
+        }
       }
-    }
-    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-  };
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    };
+  }
 }
-//runSVG();
-}
-
-
-function trrr(){
-
-  console.log('RUNNING TRRR')
-  var nodes = d3.range(30).map(function() { return {radius: Math.random() * 12 + 50}; })
-
-
-  //  console.log('nodes');
- //   console.log(nodes);
-//var nodes = [{radius: 10}, {radius: 20}, {radius: 30}, {radius: 40}, {radius: 50}, {radius: 60}, {radius: 70}, {radius: 80}];
-
-var root = nodes[0];
-
-//var colors = ["#DCDCDC","#C0C0C0","#989898","#787878","#606060","#404040","#282828","#080808"];
-//var colors = ['#F0F0F0',"#DCDCDC",'#c8c8c8', '#707070',"#989898","#606060","#303030","#000000"];
-var color = d3.scale.ordinal()
-  .range(colors);
-
-
-
-root.radius = 0;
-root.fixed = true;
-
-var force = d3.layout.force()
-    .gravity(0.05)
-    .charge(function(d, i) { return i ? 0 : -2000; })
-    .nodes(nodes)
-    .size([width, height]);
-
-force.start();
-
-}
-
-});
 
 </script>
