@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <style>
+* {
+  box-sizing: border-box;}
+
+body {
+    font-family: Arial;}
+
+h1 {
+  text-align: center;
+  font-size: 16px;
+  color: black;}
+
+nav {
+  float: left;
+  width: 20%;
+  height: 300px; 
+  background: #ffffff;
+  padding: 20px;}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;}
+
+svg {
+  float: left;
+  padding: 0px;
+  width:1135px;
+  height :740px;
+  background-color: #000000;}
+  </style>
+</head>
+
+<body>
+  <h1>UK Gas Concentration 1993-2017</h1>
+<section>
+  <nav>
+    <select id="dropdown"></select>
+    <ul>  
+      <br>
+      <li><a>Carbon Dioxide (CO2)</a></li>
+      <li><a id="co2" style="color:#ff0000;">value</a></li><br>
+       <li><a>Methane (CH4)</a></li>
+        <li><a id="ch4" style="color:#ffa500;">value</a></li><br>
+      <li><a>Nitrous Oxide (N2O)</a></li>
+       <li><a id="n2o" style="color:#FFC0EB;">value</a></li><br>
+      <li><a>Hydrofluorocarbons (HFCs)</a></li>
+       <li><a id="hfc" style="color:#008000;">value</a></li><br>
+      <li><a>Perfluorocarbons (PFCs)</a></li>
+       <li><a id="pfc" style="color:#0000ff;">value</a></li><br>
+      <li><a>Sulfur Hexafluoride (SF6)</a></li>
+      <li><a id="sf6" style="color:#4b0082;">value</a></li><br>
+    </ul>
+  </nav>
+</section>
+  
+<script src="https://d3js.org/d3.v3.js"></script>
+<script>
+
+d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
+const selector = document.getElementById("dropdown");
+
+  var headerNames = d3.keys(data[0]);
+  headerNames.splice(0,0,'Year');
+  headerNames.pop();
+
+  console.log('headerNames'); 
+  console.log(headerNames); 
+  
+//taken from https://www.d3-graph-gallery.com/graph/line_select.html
+d3.select("#dropdown")
+    .selectAll('myOptions')
+    .data(headerNames)
+    .enter().append('option').text(function (d) { return d; }) 
+    .attr("value", function (dropdowndata) { return dropdowndata; })
+
+function runSVG() {
+  console.log('RUNNING SVG');
+
+//from https://codepen.io/tarsusi/pen/reovOV
+d3.select("#dropdown").on("change",function(d){
+  console.log('selecteddddddddddddd');
+
+  var yeardata = d3.select(this).property('value');
+
+  var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
+
+  var yeargases = (data.map(function(d) { return d[yeardata] }));
+                                     
+  d3.select('#co2').text(yeargases[0]);
+  document.getElementById("co2").style.fontWeight = "bold";
+  d3.select('#ch4').text(yeargases[1]);
+  document.getElementById("ch4").style.fontWeight = "bold";
+  d3.select('#n2o').text(yeargases[2]);
+  document.getElementById("n2o").style.fontWeight = "bold";
+  d3.select('#hfc').text(yeargases[3]);
+  document.getElementById("hfc").style.fontWeight = "bold";
+  d3.select('#pfc').text(yeargases[4]);
+  document.getElementById("pfc").style.fontWeight = "bold";
+  d3.select('#sf6').text(yeargases[5]);
+  document.getElementById("sf6").style.fontWeight = "bold";
+
+  var numballs = 0;
+  var newcolours = [];
+  var counter=0;
+  var newnodenum = []; 
+
+  var totaltotal=0;
+  var testarray=[];
+  
+  for (i = 0; i < yeargases.length; i++)
+  {
+      yeargases[i] = Math.ceil(yeargases[i]);
+      
+     if (yeargases[i]<1)
+     {
+        testarray.push(yeargases[i]+3);
+     }
+
+     else
+     {
+      testarray.push(yeargases[i]);
+      totaltotal = totaltotal+Math.ceil(yeargases[i]);
+     }
+  }
+      //CALCULATING AMOUNT OF BALLS FOR EACH GAS
+      var newarayyyy=[];
+      newarayyyy.push(Math.ceil(((testarray[0]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[1]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[2]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[3]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[4]*5)/totaltotal)*5));
+      newarayyyy.push(Math.ceil(((testarray[5]*5)/totaltotal)*5));
+
+      var total= newarayyyy[0]+newarayyyy[1]+newarayyyy[2]+newarayyyy[3]+newarayyyy[4]+newarayyyy[5];
+     
+      testarray[0] = testarray[0]/10;
+      testarray[1]=testarray[1]/10*2+25;
+      testarray[2]=testarray[2]/10*5+20;
+      testarray[3]=testarray[3]/10*4+20;
+
+      if (yeargases[4]<yeargases[5]) {
+        console.log('purple is bigger than blue')
+        testarray[5]=testarray[5]+10;
+        testarray[4]=testarray[4]+5;
+      }
+
+      else if (yeargases[4]==yeargases[5]) {
+        console.log('purple is equal to blue')
+        testarray[5]=testarray[5]+10;
+        testarray[4]=testarray[4]+10;
+      }
+
+      else{
+        console.log('blue is bigger than purple');
+        testarray[4]=testarray[4]+10;
+        testarray[5]=testarray[5]+5;
+      }
+  
+ for (i = 0; i < yeargases.length; i++)
+ {
+      yeargases[i] = parseInt(yeargases[i]);
+      numballs = (newarayyyy[i]) ;
+
+      for (j = 0; j < numballs; j++)
+      {
+        newnodenum.push(testarray[i]);
+        newcolours.push(colors[counter]);
+      }
+      counter = counter +1;
+  }
+  
+  var testing = d3.scale.ordinal().range(newnodenum);
+  var color = d3.scale.ordinal().range(newcolours);
+  
+function changingradi(){
+    console.log(' runningi changingradi');
+
+   console.log(' DELETING SVG');
+   var svg1=d3.select("svg").remove();
+
+  console.log(' ADDING new SVG');
+   svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+  svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return testing(d.index); }).attr("fill", function(d) {return color(d.index);  })
+}
+    
+  changingradi()
+  runforce();
+});
+}
+
+//SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW  //SVG NOT MINE BELOW
+var width = 1060,
+    height = 720;
+
+var nodes = d3.range(31).map(function() { return {radius: Math.random() * 12 + 50}; })
+var root = nodes[0];
+root.radius = 0;
+root.fixed = true;
+
+var force = d3.layout.force()
+    .gravity(0.05)
+    .charge(function(d, i) { return i ? 0 : -2000; })
+    .nodes(nodes)
+    .size([width, height]);
+
+force.start();
+
+console.log(' ADDING SVG');
+var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+runSVG();
+
+function runforce(){
+
+  console.log('running runforce');
+
+  force.on("tick", function(e) {
+    var q = d3.geom.quadtree(nodes), i = 0, n = nodes.length;
+
+    while (++i < n) q.visit(collide(nodes[i]));
+
+    svg.selectAll("circle")
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+
+  svg.on("mousemove", function() {
+    var p1 = d3.mouse(this);
+    root.px = p1[0];
+    root.py = p1[1];
+    force.resume();});
+
+  function collide(node) {
+    var r = node.radius + 16,
+        nx1 = node.x - r,
+        nx2 = node.x + r,
+        ny1 = node.y - r,
+        ny2 = node.y + r;
+    return function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== node)) {
+        var x = node.x - quad.point.x,
+            y = node.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = node.radius + quad.point.radius;
+        if (l < r) {
+          l = (l - r) / l * .5;
+          node.x -= x *= l;
+          node.y -= y *= l;
+          quad.point.x += x;
+          quad.point.y += y;
+        }
+      }
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    };
+  }
+}
+});
+</script>
