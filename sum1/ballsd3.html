@@ -59,99 +59,98 @@ svg {
 </section>
   
 <script src="https://d3js.org/d3.v3.js"></script>
-<script>
+<script src="csvSUM.js"></script>
+<!-- <script>
 
-//function wholeprog(){
-class ballMaker{
+  class ballMaker{
       constructor(year,yeargasess){
     this.year = year;
     this.yeargasess = yeargasess; }
 
+    runDropDown(){
+
+    }
     runSVG() {
 
       console.log('RUNNING SVG');
       console.log(this.yeargasess);
 
       d3.select('#co2').text(this.yeargasess[0]);
-    document.getElementById("co2").style.fontWeight = "bold";
-    d3.select('#ch4').text(this.yeargasess[1]);
-    document.getElementById("ch4").style.fontWeight = "bold";
-    d3.select('#n2o').text(this.yeargasess[2]);
-    document.getElementById("n2o").style.fontWeight = "bold";
-    d3.select('#hfc').text(this.yeargasess[3]);
-    document.getElementById("hfc").style.fontWeight = "bold";
-    d3.select('#pfc').text(this.yeargasess[4]);
-    document.getElementById("pfc").style.fontWeight = "bold";
-    d3.select('#sf6').text(this.yeargasess[5]);
-    document.getElementById("sf6").style.fontWeight = "bold";
-    
-    var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
-
-      var numballs = 0;
-  var newcolours = [];
-  var counter=0;
-  var newnodenum = []; 
-
-  var totaltotal=0;
-  var testarray=[];
-  
-  for (var i = 0; i < this.yeargasess.length; i++)
-  {
-      this.yeargasess[i] = Math.ceil(this.yeargasess[i]);
+      document.getElementById("co2").style.fontWeight = "bold";
+      d3.select('#ch4').text(this.yeargasess[1]);
+      document.getElementById("ch4").style.fontWeight = "bold";
+      d3.select('#n2o').text(this.yeargasess[2]);
+      document.getElementById("n2o").style.fontWeight = "bold";
+      d3.select('#hfc').text(this.yeargasess[3]);
+      document.getElementById("hfc").style.fontWeight = "bold";
+      d3.select('#pfc').text(this.yeargasess[4]);
+      document.getElementById("pfc").style.fontWeight = "bold";
+      d3.select('#sf6').text(this.yeargasess[5]);
+      document.getElementById("sf6").style.fontWeight = "bold";
       
-     if (this.yeargasess[i]<1)
-     {
-        testarray.push(this.yeargasess[i]+3);
-     }
+      var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
 
-     else
-     {
-      testarray.push(this.yeargasess[i]);
-      totaltotal = totaltotal+Math.ceil(this.yeargasess[i]);
-     }
-  }
+      var newcolours = [];
+      var counter=0;
+      var newnodenum = []; 
+      var totaltotal=0;
+      var amountBalls=[];
+      
+      for (var i = 0; i < this.yeargasess.length; i++)
+      {
+          this.yeargasess[i] = Math.ceil(this.yeargasess[i]);
+          
+         if (this.yeargasess[i]<1)
+         {
+            amountBalls.push(this.yeargasess[i]+3);
+         }
+
+         else
+         {
+          amountBalls.push(this.yeargasess[i]);
+          totaltotal = totaltotal+Math.ceil(this.yeargasess[i]);
+         }
+      }
       //CALCULATING AMOUNT OF BALLS FOR EACH GAS
       var newarayyyy=[];
-      newarayyyy.push(Math.ceil(((testarray[0]*5)/totaltotal)*5));
-      newarayyyy.push(Math.ceil(((testarray[1]*5)/totaltotal)*5));
-      newarayyyy.push(Math.ceil(((testarray[2]*5)/totaltotal)*5));
-      newarayyyy.push(Math.ceil(((testarray[3]*5)/totaltotal)*5));
-      newarayyyy.push(Math.ceil(((testarray[4]*5)/totaltotal)*5));
-      newarayyyy.push(Math.ceil(((testarray[5]*5)/totaltotal)*5));
+      for (var i = 0; i < 6; i++)
+      {
+        console.log(i);
+        newarayyyy.push(Math.ceil(((amountBalls[i]*5)/totaltotal)*5));
 
-      var total= newarayyyy[0]+newarayyyy[1]+newarayyyy[2]+newarayyyy[3]+newarayyyy[4]+newarayyyy[5];
-     
-      testarray[0] = testarray[0]/10;
-      testarray[1]=testarray[1]/10*2+25;
-      testarray[2]=testarray[2]/10*5+20;
-      testarray[3]=testarray[3]/10*4+20;
+      }
+      
+      amountBalls[0] = amountBalls[0]/10;
+      amountBalls[1]=amountBalls[1]/10*2+25;
+      amountBalls[2]=amountBalls[2]/10*5+20;
+      amountBalls[3]=amountBalls[3]/10*4+20;
 
       if (this.yeargasess[4]<this.yeargasess[5]) {
         console.log('purple is bigger than blue')
-        testarray[5]=testarray[5]+10;
-        testarray[4]=testarray[4]+5;
+        amountBalls[5]=amountBalls[5]+10;
+        amountBalls[4]=amountBalls[4]+5;
       }
 
       else if (this.yeargasess[4]==this.yeargasess[5]) {
         console.log('purple is equal to blue')
-        testarray[5]=testarray[5]+10;
-        testarray[4]=testarray[4]+10;
+        amountBalls[5]=amountBalls[5]+10;
+        amountBalls[4]=amountBalls[4]+10;
       }
 
       else{
         console.log('blue is bigger than purple');
-        testarray[4]=testarray[4]+10;
-        testarray[5]=testarray[5]+5;
+        amountBalls[4]=amountBalls[4]+10;
+        amountBalls[5]=amountBalls[5]+5;
       }
   
  for (i = 0; i < this.yeargasess.length; i++)
  {
       this.yeargasess[i] = parseInt(this.yeargasess[i]);
-      numballs = (newarayyyy[i]) ;
+      var numballs = (newarayyyy[i]) ;
 
       for (var j = 0; j < numballs; j++)
       {
-        newnodenum.push(testarray[i]);
+        newnodenum.push(amountBalls[i]);
         newcolours.push(colors[counter]);
       }
       counter = counter +1;
@@ -160,119 +159,99 @@ class ballMaker{
   var testing = d3.scale.ordinal().range(newnodenum);
   var color = d3.scale.ordinal().range(newcolours);
   
-function changingradi(){
-    console.log(' runningi changingradi');
 
-   console.log(' DELETING SVG');
-   var svg1=d3.select("svg").remove();
+    function runforce(gasSize,colour){
 
-  // console.log(' ADDING new SVG');
-  //  svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
-  // svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return testing(d.index); }).attr("fill", function(d) {return color(d.index);  })
+    console.log('running runforce');
+    var svg1=d3.select("svg").remove();
+    var nodes = d3.range(31).map(function() { return {radius: Math.random() * 12 + 50}; });
+    var root = nodes[0];
+    root.radius = 0;
+    root.fixed = true;
 
-}
-  changingradi();
-  runforce(testing,color);
+    var force = d3.layout.force()
+        .gravity(0.05)
+        .charge(function(d, i) { return i ? 0 : -2000; })
+        .nodes(nodes)
+        .size([1060, 720]);
 
+    force.start();
+
+    console.log(' ADDING new SVG');
+    var svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
+    svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return gasSize(d.index); }).attr("fill", function(d) {return colour(d.index);  })
+
+
+    force.on("tick", function(e) {
+      var q = d3.geom.quadtree(nodes), i = 0, n = nodes.length;
+
+      while (++i < n) q.visit(collide(nodes[i]));
+
+      svg.selectAll("circle")
+          .attr("cx", function(d) { return d.x; })
+          .attr("cy", function(d) { return d.y; });
+    });
+
+    svg.on("mousemove", function() {
+      var p1 = d3.mouse(this);
+      root.px = p1[0];
+      root.py = p1[1];
+      force.resume();});
+
+    function collide(node) {
+      var r = node.radius + 16,
+          nx1 = node.x - r,
+          nx2 = node.x + r,
+          ny1 = node.y - r,
+          ny2 = node.y + r;
+      return function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== node)) {
+          var x = node.x - quad.point.x,
+              y = node.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y),
+              r = node.radius + quad.point.radius;
+          if (l < r) {
+            l = (l - r) / l * .5;
+            node.x -= x *= l;
+            node.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      };
   }
+}
+
+  runforce(testing,color);
+}
 }
  
 
-d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
-const selector = document.getElementById("dropdown");
+  d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
 
-  var headerNames = d3.keys(data[0]);
-  headerNames.splice(0,0,'Year');
-  headerNames.pop();
+    var headerNames = d3.keys(data[0]);
+    headerNames.splice(0,0,'Year');
+    headerNames.pop();
 
-  console.log('headerNames'); 
-  console.log(headerNames); 
-  
+    console.log('headerNames'); 
+    console.log(headerNames); 
+    
+    d3.select("#dropdown")
+        .selectAll('myOptions')
+        .data(headerNames)
+        .enter().append('option').text(function (d) { return d; })
+        .attr("value", function (dropdowndata) { return dropdowndata; })
 
-//taken from https://www.d3-graph-gallery.com/graph/line_select.html
-d3.select("#dropdown")
-    .selectAll('myOptions')
-    .data(headerNames)
-    .enter().append('option').text(function (d) { return d; }) 
-    .attr("value", function (dropdowndata) { return dropdowndata; })
+    d3.select("#dropdown").on("change",function(d){
+    var yeardata = d3.select(this).property('value');
+    var yeargases = (data.map(function(d) { return d[yeardata] }));
+   
+    console.log(yeardata);
 
-d3.select("#dropdown").on("change",function(d){
-var yeardata = d3.select(this).property('value');
-var yeargases = (data.map(function(d) { return d[yeardata] }));
-var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
-console.log(yeardata);
+    let b = new ballMaker(yeardata , yeargases);
+    b.runSVG();
 
-
-let b = new ballMaker(yeardata , yeargases);
-b.runSVG();
-
-});
-});
-
-
-function runforce(gasSize,colour){
-
-  console.log('running runforce');
-var nodes = d3.range(31).map(function() { return {radius: Math.random() * 12 + 50}; });
-var root = nodes[0];
-root.radius = 0;
-root.fixed = true;
-
-var force = d3.layout.force()
-    .gravity(0.05)
-    .charge(function(d, i) { return i ? 0 : -2000; })
-    .nodes(nodes)
-    .size([1060, 720]);
-
-force.start();
-
-//console.log(' ADDING SVG');
-var svg;// = d3.select("body").append("svg").attr("width", width).attr("height", height);
-
-console.log(' ADDING new SVG');
-   svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
-  svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return gasSize(d.index); }).attr("fill", function(d) {return colour(d.index);  })
-
-
-  force.on("tick", function(e) {
-    var q = d3.geom.quadtree(nodes), i = 0, n = nodes.length;
-
-    while (++i < n) q.visit(collide(nodes[i]));
-
-    svg.selectAll("circle")
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+    });
   });
-
-  svg.on("mousemove", function() {
-    var p1 = d3.mouse(this);
-    root.px = p1[0];
-    root.py = p1[1];
-    force.resume();});
-
-  function collide(node) {
-    var r = node.radius + 16,
-        nx1 = node.x - r,
-        nx2 = node.x + r,
-        ny1 = node.y - r,
-        ny2 = node.y + r;
-    return function(quad, x1, y1, x2, y2) {
-      if (quad.point && (quad.point !== node)) {
-        var x = node.x - quad.point.x,
-            y = node.y - quad.point.y,
-            l = Math.sqrt(x * x + y * y),
-            r = node.radius + quad.point.radius;
-        if (l < r) {
-          l = (l - r) / l * .5;
-          node.x -= x *= l;
-          node.y -= y *= l;
-          quad.point.x += x;
-          quad.point.y += y;
-        }
-      }
-      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-    };
-  }
-}
-
-</script>
+</script> -->
