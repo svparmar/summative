@@ -119,15 +119,15 @@ class BallMaker {
 
       // small ball radii adjustment, comparing the last two values to each other as they are the smallest and need to be displayed against the biggest
       if (this.yeargases[4] < this.yeargases[5]) {
-        console.log('purple is bigger than blue');
+        // console.log('purple is bigger than blue');
         amountBalls[5] = amountBalls[5] + 10;
         amountBalls[4] = amountBalls[4] + 5;
       } else if (this.yeargases[4] === this.yeargases[5]) {
-        console.log('purple is equal to blue');
+        // console.log('purple is equal to blue');
         amountBalls[5] = amountBalls[5] + 10;
         amountBalls[4] = amountBalls[4] + 10;
       } else {
-        console.log('blue is bigger than purple');
+        // console.log('blue is bigger than purple');
         amountBalls[4] = amountBalls[4] + 10;
         amountBalls[5] = amountBalls[5] + 5;
       }
@@ -160,7 +160,7 @@ class BallMaker {
  * @param colour {string} allows the colours in the list to be used to colour the corresponding ball with the gasSize (size of radius)
     */
       function runforce (gasSize, colour) {
-        console.log('running runforce');
+        // console.log('running runforce');
 
         // remove old svg
         d3.select('svg').remove();
@@ -180,7 +180,7 @@ class BallMaker {
 
         force.start();
 
-        console.log(' ADDING new SVG');
+        // console.log(' ADDING new SVG');
 
         // new svg added with data and colour passed in
           var svg = d3.select('body').append('svg').attr('width', 1060).attr('height', 720);
