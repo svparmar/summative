@@ -40,8 +40,9 @@ d3.csv('https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.cs
 /** Class creating balls for a particular year in the dataset. */
 class BallMaker {
   /**
- * This class represents the circles that will be made for the svg.
- * containing year and yeargases parameters - used to create svg from dataset
+ * This class represents the circles that will be made for the svg. The reason I have used collision detection is to model the particles in the atomosphere that
+ do collide with each other in the air.
+ * This class contains year and yeargases parameters - used to create svg from the dataset
  * @param {string} year allows the year selected from the dropdown menu to be used in creating the svg from the data of that year
  * @param {string} yeargases is the data of the specific year which has been put into an array
  */
