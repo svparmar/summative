@@ -1,55 +1,18 @@
 
-/**
- * This function allowes access to the csv file containing data for my csv through a public github repository. This function puts all the column names of the csv (the years 1990-2017)
- into a  variable to be  used as options for the dropdown menu. This allows the user to select a particular year to display the gas concentration of a particular year.
- Within this function, the class ballMaker can be accessed by calling it based on the data selected from the dropdown.
- * @function csv
- * @param data {string} holds the list all the data collected from the csv
-    */
-d3.csv('https://raw.githubusercontent.com/svparmar/summative/master/sum1/specificDataUsedD3.csv', function (data) {
-// headerNames holds list of years from csv
-  var headerNames = d3.keys(data[0]);
-
-  // modification of dropdown to put 'Year' at the start of dropdown
-  headerNames.splice(0, 0, 'Year');
-  headerNames.pop();
-
-  console.log('headerNames');
-  console.log(headerNames);
-
-  // creates dropdown
-  d3.select('#dropdown')
-      .selectAll('myOptions')
-      .data(headerNames)
-      .enter().append('option').text(function (d) { return d; })
-      .attr('value', function (dropdowndata) { return dropdowndata; });
-
-  // when an item has been selected on the dropdown, create an object of class BallMaker and pass in the value of the year selected along with the data from the csv for
-  // that particular year
-  d3.select('#dropdown').on('change', function (d) {
-  var yeardata = d3.select(this).property('value');
-  var yeargasesSel = (data.map(function (d) { return d[yeardata]; }));
-
-  console.log(yeardata);
-
-  const SelBalls = new BallMaker(yeardata, yeargasesSel);
-  SelBalls.runSVG();
-  });
-});
-
 /** Class creating balls for a particular year in the dataset. */
 class BallMaker {
   /**
- * This class represents the circles that will be made for the svg. The reason I have used collision detection is to model the particles in the atomosphere that
- do collide with each other in the air.
- * This class contains year and yeargases parameters - used to create svg from the dataset
- * @param {string} year allows the year selected from the dropdown menu to be used in creating the svg from the data of that year
- * @param {string} yeargases is the data of the specific year which has been put into an array
+ * This class represents the circles that will be made for the svg. The reason I have used collision detection is to model the particles in the atmosphere that
+ collide with each other in the air.
+ * This class contains year and gases of that year parameters - used to create svg from the dataset.
+ * @param {string} actualCol allows the year selected from the dropdown menu to be used in creating the svg from the data of that year.
+ * @param {string} actualColData is the data of the specific year which has been put into an array.
  */
-
-    constructor (year, yeargases) {
-      this.year = year;
-      this.yeargases = yeargases;
+    // (year, yeargases, itemName) repectively
+    constructor (actualCol, actualColData, itemName) {
+      this.actualCol = actualCol;
+      this.actualColData = actualColData;
+      this.itemName = itemName;
     }
 
     /** Function that is called when an object of BallMaker has been made. Allows the amount of balls for each colour to be calculated along with the
@@ -62,29 +25,33 @@ class BallMaker {
 
     runSVG () {
       console.log('RUNNING SVG');
-      console.log(this.yeargases);
-
-      // displays each cell of csv of a particular year column
-      d3.select('#co2').text(this.yeargases[0]);
-      document.getElementById('co2').style.fontWeight = 'bold';
-      d3.select('#ch4').text(this.yeargases[1]);
-      document.getElementById('ch4').style.fontWeight = 'bold';
-      d3.select('#n2o').text(this.yeargases[2]);
-      document.getElementById('n2o').style.fontWeight = 'bold';
-      d3.select('#hfc').text(this.yeargases[3]);
-      document.getElementById('hfc').style.fontWeight = 'bold';
-      d3.select('#pfc').text(this.yeargases[4]);
-      document.getElementById('pfc').style.fontWeight = 'bold';
-      d3.select('#sf6').text(this.yeargases[5]);
-      document.getElementById('sf6').style.fontWeight = 'bold';
+      console.log(this.actualColData);
 
       // colour list of balls used: red,orange,pink,green.blue,purple
       var colors = ['#ff0000', '#ffa500', '#FFC0EB', '#008000', '#0000ff', '#4b0082'];
 
+      // displays each cell of csv of a particular year column
+      var ul = document.getElementById('list');
+      ul.innerHTML = '';
+
+      for (var i = 0; i < this.actualColData.length; i++) {
+        var li0 = document.createElement('li');
+        li0.appendChild(document.createTextNode(this.itemName[i]));
+        ul.appendChild(li0);
+
+        var li1 = document.createElement('li');
+        li1.appendChild(document.createTextNode(this.actualColData[i]));
+
+        ul.appendChild(li1);
+
+        li1.style.color = colors[i];
+        li1.style.fontWeight = 'bold';
+      }
+
       // stores colour for each individual ball
       var newcolours = [];
 
-      // array of how many ball values to include a given amount of times, i.e displaying a value of 500 for CO2 could be represneted as 20 red balls
+      // array of how many ball values to include a given amount of times, i.e displaying a value of 500 for CO2 could be represented as 20 red balls
       var newnodenum = [];
 
       // total value of all gases in a given year
@@ -93,49 +60,59 @@ class BallMaker {
       // amount of balls to use in the svg
       var amountBalls = [];
 
+      var nodesNum = 31;
+
       // allows the smaller balls to be seen
-      for (var i = 0; i < this.yeargases.length; i++) {
+      for (i = 0; i < this.actualColData.length; i++) {
         //
-        this.yeargases[i] = Math.ceil(this.yeargases[i]);
-
-         if (this.yeargases[i] < 1) {
-            amountBalls.push(this.yeargases[i] + 3);
+        this.actualColData[i] = parseFloat(this.actualColData[i]);
+        // if value <1, ball still needs to be represented so given as 1 ball
+         if (this.actualColData[i] < 1) {
+            amountBalls.push(1);
          } else {
-          amountBalls.push(this.yeargases[i]);
-          totaltotal = totaltotal + Math.ceil(this.yeargases[i]);
+          amountBalls.push(this.actualColData[i]);
          }
+         totaltotal = totaltotal + (amountBalls[i]);
       }
 
-      // CALCULATING AMOUNT OF BALLS FOR EACH GAS
+      // CALCULATING AMOUNT OF BALLS FOR EACH GAS, allowing for redistribution if necessary i.e taking from the larger populated balls and giving to the less populated
       var tempAmount = [];
-      for (i = 0; i < 6; i++) {
-        tempAmount.push(Math.ceil(((amountBalls[i] * 5) / totaltotal) * 5));
+      var thelargest = 0;
+      var check = 0;
+      for (i = 0; i < this.actualColData.length; i++) {
+        tempAmount.push(parseInt((((amountBalls[i]) / totaltotal) * nodesNum)));
+
+        check = check + tempAmount[i];
       }
 
-      // adjusting size of balls radii
-      amountBalls[0] = amountBalls[0] / 10;
-      amountBalls[1] = amountBalls[1] / 10 * 2 + 25;
-      amountBalls[2] = amountBalls[2] / 10 * 5 + 20;
-      amountBalls[3] = amountBalls[3] / 10 * 4 + 20;
+      var largeCount = 0;
+      for (i = 0; i < this.actualColData.length; i++) {
+        if (tempAmount[i] > thelargest) {
+          thelargest = tempAmount[i];
+          largeCount = i;
+        }
+}
 
-      // small ball radii adjustment, comparing the last two values to each other as they are the smallest and need to be displayed against the biggest
-      if (this.yeargases[4] < this.yeargases[5]) {
-        // console.log('purple is bigger than blue');
-        amountBalls[5] = amountBalls[5] + 10;
-        amountBalls[4] = amountBalls[4] + 5;
-      } else if (this.yeargases[4] === this.yeargases[5]) {
-        // console.log('purple is equal to blue');
-        amountBalls[5] = amountBalls[5] + 10;
-        amountBalls[4] = amountBalls[4] + 10;
-      } else {
-        // console.log('blue is bigger than purple');
-        amountBalls[4] = amountBalls[4] + 10;
-        amountBalls[5] = amountBalls[5] + 5;
+      for (i = 0; i < this.actualColData.length; i++) {
+        if (tempAmount[i] < 1) {
+          if (check <= (nodesNum - 1)) {
+            tempAmount[i] = 1;
+            check = check + 1;
+          } else {
+            tempAmount[largeCount] = (tempAmount[largeCount]) - 1;
+            tempAmount[i] = 1;
+            check = check + 1;
+          }
+        }
+      }
+
+      for (i = 0; i < this.actualColData.length; i++) {
+        amountBalls[i] = amountBalls[i] / 20 * 2 + 12;
       }
 
       // add the balls for a single gas with a given radii j amount of times
       // with the colour specified
-     for (i = 0; i < this.yeargases.length; i++) {
+     for (i = 0; i < this.actualColData.length; i++) {
           for (var j = 0; j < tempAmount[i]; j++) {
             newnodenum.push(amountBalls[i]);
             newcolours.push(colors[i]);
@@ -157,17 +134,15 @@ class BallMaker {
  of gases in air. This function removes the previous svg and adds the new one created for another year with the parameters passed into the function.
  * @memberof BallMaker
  * @function runforce
- * @param gasSize {string} holds the list of ball radii - carried in from runSVG()
- * @param colour {string} allows the colours in the list to be used to colour the corresponding ball with the gasSize (size of radius)
+ * @param radiusSize {string} holds the list of ball radii - carried in from runSVG()
+ * @param colour {string} allows the colours in the list to be used to colour the corresponding ball with the radiusSize (size of radius)
     */
-      function runforce (gasSize, colour) {
-        // console.log('running runforce');
-
+      function runforce (radiusSize, colour) {
         // remove old svg
         d3.select('svg').remove();
 
         // uses 31 nodes to give a representation of gases in the air
-        var nodes = d3.range(31).map(function () { return { radius: Math.random() * 12 + 50 }; });
+        var nodes = d3.range(32).map(function () { return { radius: Math.random() * 12 + 50 }; });
         var root = nodes[0];
         root.radius = 0;
         root.fixed = true;
@@ -181,11 +156,9 @@ class BallMaker {
 
         force.start();
 
-        // console.log(' ADDING new SVG');
-
         // new svg added with data and colour passed in
           var svg = d3.select('body').append('svg').attr('width', 1060).attr('height', 720);
-          svg.selectAll('circle').data(nodes.slice(1)).enter().append('circle').attr('r', function (d) { return gasSize(d.index); }).attr('fill', function (d) { return colour(d.index); });
+          svg.selectAll('circle').data(nodes.slice(1)).enter().append('circle').attr('r', function (d) { return radiusSize(d.index); }).attr('fill', function (d) { return colour(d.index); });
 
           force.on('tick', function (e) {
             var q = d3.geom.quadtree(nodes); var i = 0; var n = nodes.length;
@@ -207,10 +180,10 @@ class BallMaker {
 });
 
 /**
- * Function collide is part of runforce and is used to control the balls position when they come into contact witht he mouse or other balls.
+ * Function collide is part of runforce and is used to control the balls position when they come into contact with the mouse or other balls.
  * @memberof BallMaker
  * @function collide (node)
- * @param node {number} to pass in each ball with their seperate attributes
+ * @param node {number} to pass in each ball with their seperate attributes.
     */
           function collide (node) {
             var r = node.radius + 16;

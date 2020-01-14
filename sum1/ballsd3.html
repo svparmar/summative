@@ -3,6 +3,8 @@
 <meta charset="utf-8">
 
 <head>
+
+<!-- Modified code from W3 Schools - https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_float -->
   <style>
 * {
   box-sizing: border-box;}
@@ -31,7 +33,7 @@ svg {
   padding: 0px;
   width:1135px;
   height :740px;
-  background-color: #000000;}
+  background-color: #ffffff;}
   </style>
 </head>
 
@@ -40,26 +42,59 @@ svg {
 <section>
   <nav>
     <select id="dropdown"></select>
-    <ul>  
-      <br>
-      <li><a>Carbon Dioxide (CO2)</a></li>
-      <li><a id="co2" style="color:#ff0000;">value</a></li><br>
-       <li><a>Methane (CH4)</a></li>
-        <li><a id="ch4" style="color:#ffa500;">value</a></li><br>
-      <li><a>Nitrous Oxide (N2O)</a></li>
-       <li><a id="n2o" style="color:#FFC0EB;">value</a></li><br>
-      <li><a>Hydrofluorocarbons (HFCs)</a></li>
-       <li><a id="hfc" style="color:#008000;">value</a></li><br>
-      <li><a>Perfluorocarbons (PFCs)</a></li>
-       <li><a id="pfc" style="color:#0000ff;">value</a></li><br>
-      <li><a>Sulfur Hexafluoride (SF6)</a></li>
-      <li><a id="sf6" style="color:#4b0082;">value</a></li><br>
-    </ul>
+    
+    <ul id="list"></ul>
   </nav>
 </section>
   
 <script src="https://d3js.org/d3.v3.js"></script>
 <script src="csvSUM.js"></script>
+<script>
+
+  /**
+ * This function allowes access to the csv file containing data for my csv through a public github repository. This function puts all the column names of the csv (the years 1990-2017)
+ into a  variable to be  used as options for the dropdown menu. This allows the user to select a particular year to display the gas concentration of a particular year.
+ Within this function, the class ballMaker can be accessed by calling it based on the data selected from the dropdown.
+ * @function csv
+ * @param data {string} holds the list all the data collected from the csv.
+    */
+    
+  d3.csv('https://raw.githubusercontent.com/svparmar/summative/master/sum1/specificDataUsedD3.csv', function (data) {
+// headerNames holds list of years from csv
+  var headerNames = d3.keys(data[0]);
+
+  // i.e gas names
+  var nameOfProperty = (headerNames[(headerNames.length - 1)]);
+  var nameOfPropertyItems = (data.map(function (d) { return d[nameOfProperty]; }));
+
+  // removal of 'Year' on dropdown for specific data  - i.e gets rid of any column names irrelevant to dataset
+  headerNames.pop();
+
+  console.log('headerNames');
+  console.log(headerNames);
+
+  // taken from https://www.d3-graph-gallery.com/graph/line_select.html
+  // creates dropdown
+  d3.select('#dropdown')
+      .selectAll('myOptions')
+      .data(headerNames)
+      .enter().append('option').text(function (d) { return d; })
+      .attr('value', function (dropdowndata) { return dropdowndata; });
+
+  // from https://codepen.io/tarsusi/pen/reovOV
+  // when an item has been selected on the dropdown, create an object of class BallMaker and pass in the value of the year selected along with the data from the csv for
+  // that particular year
+  d3.select('#dropdown').on('change', function (d) {
+  var dropdata = d3.select(this).property('value');
+  var dropdataSel = (data.map(function (d) { return d[dropdata]; }));
+
+  console.log(dropdata);
+
+  const SelBalls = new BallMaker(dropdata, dropdataSel, nameOfPropertyItems);
+  SelBalls.runSVG();
+  });
+});
+</script>
 <!-- <script>
 
   class ballMaker{
