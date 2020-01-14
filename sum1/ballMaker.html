@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>BallMaker<span class="signature">(year, yeargases)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>BallMaker<span class="signature">(actualCol, actualColData)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class creating balls for a particular year in the dataset.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="BallMaker"><span class="type-signature"></span>new BallMaker<span class="signature">(year, yeargases)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="BallMaker"><span class="type-signature"></span>new BallMaker<span class="signature">(actualCol, actualColData)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,8 +53,9 @@
 
 
 <div class="description">
-    This class represents the circles that will be made for the svg.
-containing year and yeargases parameters - used to create svg from dataset
+    This class represents the circles that will be made for the svg. The reason I have used collision detection is to model the particles in the atmosphere that
+ collide with each other in the air.
+This class contains year and gases of that year parameters - used to create svg from the dataset.
 </div>
 
 
@@ -90,7 +91,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
         <tr>
             
-                <td class="name"><code>year</code></td>
+                <td class="name"><code>actualCol</code></td>
             
 
             <td class="type">
@@ -106,14 +107,14 @@ containing year and yeargases parameters - used to create svg from dataset
 
             
 
-            <td class="description last">allows the year selected from the dropdown menu to be used in creating the svg from the data of that year</td>
+            <td class="description last">allows the year selected from the dropdown menu to be used in creating the svg from the data of that year.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>yeargases</code></td>
+                <td class="name"><code>actualColData</code></td>
             
 
             <td class="type">
@@ -129,7 +130,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
             
 
-            <td class="description last">is the data of the specific year which has been put into an array</td>
+            <td class="description last">is the data of the specific year which has been put into an array.</td>
         </tr>
 
     
@@ -170,7 +171,7 @@ containing year and yeargases parameters - used to create svg from dataset
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line49">line 49</a>
+        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -234,7 +235,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
 
 <div class="description">
-    Function collide is part of runforce and is used to control the balls position when they come into contact witht he mouse or other balls.
+    Function collide is part of runforce and is used to control the balls position when they come into contact with the mouse or other balls.
 </div>
 
 
@@ -286,7 +287,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
             
 
-            <td class="description last">to pass in each ball with their seperate attributes</td>
+            <td class="description last">to pass in each ball with their seperate attributes.</td>
         </tr>
 
     
@@ -327,7 +328,7 @@ containing year and yeargases parameters - used to create svg from dataset
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line208">line 208</a>
+        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -363,7 +364,7 @@ containing year and yeargases parameters - used to create svg from dataset
     
 
     
-    <h4 class="name" id=".runforce"><span class="type-signature">(static) </span>runforce<span class="signature">(gasSize, colour)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".runforce"><span class="type-signature">(static) </span>runforce<span class="signature">(radiusSize, colour)</span><span class="type-signature"></span></h4>
     
 
     
@@ -409,7 +410,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
         <tr>
             
-                <td class="name"><code>gasSize</code></td>
+                <td class="name"><code>radiusSize</code></td>
             
 
             <td class="type">
@@ -448,7 +449,7 @@ containing year and yeargases parameters - used to create svg from dataset
 
             
 
-            <td class="description last">allows the colours in the list to be used to colour the corresponding ball with the gasSize (size of radius)</td>
+            <td class="description last">allows the colours in the list to be used to colour the corresponding ball with the radiusSize (size of radius)</td>
         </tr>
 
     
@@ -489,7 +490,7 @@ containing year and yeargases parameters - used to create svg from dataset
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line153">line 153</a>
+        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line131">line 131</a>
     </li></ul></dd>
     
 
@@ -581,7 +582,7 @@ Sets the coloured labels to the correct data retrived from the data set.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line62">line 62</a>
+        <a href="csvSUM.js.html">csvSUM.js</a>, <a href="csvSUM.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -627,13 +628,13 @@ Sets the coloured labels to the correct data retrived from the data set.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BallMaker.html">BallMaker</a></li></ul><h3>Global</h3><ul><li><a href="global.html#csv">csv</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BallMaker.html">BallMaker</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 30 2019 11:15:13 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Jan 14 2020 00:06:30 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>

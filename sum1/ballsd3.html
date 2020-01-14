@@ -34,6 +34,12 @@ svg {
   width:1135px;
   height :740px;
   background-color: #ffffff;}
+
+  div {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
   </style>
 </head>
 
@@ -41,14 +47,20 @@ svg {
   <h1>UK Greenhouse Gas Concentration 1993-2017</h1>
 <section>
   <nav>
+    <p>Select from the dropdown to see the visualisation!</p>
     <select id="dropdown"></select>
     
     <ul id="list"></ul>
+
   </nav>
 </section>
+
+<div><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</div>
+  
+
   
 <script src="https://d3js.org/d3.v3.js"></script>
-<script src="csvSUM.js"></script>
+<script src="ballsd3.js"></script>
 <script>
 
   /**
@@ -58,7 +70,7 @@ svg {
  * @function csv
  * @param data {string} holds the list all the data collected from the csv.
     */
-    
+
   d3.csv('https://raw.githubusercontent.com/svparmar/summative/master/sum1/specificDataUsedD3.csv', function (data) {
 // headerNames holds list of years from csv
   var headerNames = d3.keys(data[0]);
@@ -81,6 +93,13 @@ svg {
       .enter().append('option').text(function (d) { return d; })
       .attr('value', function (dropdowndata) { return dropdowndata; });
 
+  //initialisaiton of first visualisation 
+  var beforeSel = headerNames[0];
+  var beforeSelData = (data.map(function (d) { return d[beforeSel]; }));
+  const SelBalls = new BallMaker(beforeSel, beforeSelData, nameOfPropertyItems);
+  SelBalls.runSVG();
+
+
   // from https://codepen.io/tarsusi/pen/reovOV
   // when an item has been selected on the dropdown, create an object of class BallMaker and pass in the value of the year selected along with the data from the csv for
   // that particular year
@@ -95,198 +114,5 @@ svg {
   });
 });
 </script>
-<!-- <script>
-
-  class ballMaker{
-      constructor(year,yeargasess){
-    this.year = year;
-    this.yeargasess = yeargasess; }
-
-    runDropDown(){
-
-    }
-    runSVG() {
-
-      console.log('RUNNING SVG');
-      console.log(this.yeargasess);
-
-      d3.select('#co2').text(this.yeargasess[0]);
-      document.getElementById("co2").style.fontWeight = "bold";
-      d3.select('#ch4').text(this.yeargasess[1]);
-      document.getElementById("ch4").style.fontWeight = "bold";
-      d3.select('#n2o').text(this.yeargasess[2]);
-      document.getElementById("n2o").style.fontWeight = "bold";
-      d3.select('#hfc').text(this.yeargasess[3]);
-      document.getElementById("hfc").style.fontWeight = "bold";
-      d3.select('#pfc').text(this.yeargasess[4]);
-      document.getElementById("pfc").style.fontWeight = "bold";
-      d3.select('#sf6').text(this.yeargasess[5]);
-      document.getElementById("sf6").style.fontWeight = "bold";
-      
-      var colors = ['#ff0000',"#ffa500",'#FFC0EB', '#008000',"#0000ff","#4b0082"];
-
-      var newcolours = [];
-      var counter=0;
-      var newnodenum = []; 
-      var totaltotal=0;
-      var amountBalls=[];
-      
-      for (var i = 0; i < this.yeargasess.length; i++)
-      {
-          this.yeargasess[i] = Math.ceil(this.yeargasess[i]);
-          
-         if (this.yeargasess[i]<1)
-         {
-            amountBalls.push(this.yeargasess[i]+3);
-         }
-
-         else
-         {
-          amountBalls.push(this.yeargasess[i]);
-          totaltotal = totaltotal+Math.ceil(this.yeargasess[i]);
-         }
-      }
-      //CALCULATING AMOUNT OF BALLS FOR EACH GAS
-      var newarayyyy=[];
-      for (var i = 0; i < 6; i++)
-      {
-        console.log(i);
-        newarayyyy.push(Math.ceil(((amountBalls[i]*5)/totaltotal)*5));
-
-      }
-      
-      amountBalls[0] = amountBalls[0]/10;
-      amountBalls[1]=amountBalls[1]/10*2+25;
-      amountBalls[2]=amountBalls[2]/10*5+20;
-      amountBalls[3]=amountBalls[3]/10*4+20;
-
-      if (this.yeargasess[4]<this.yeargasess[5]) {
-        console.log('purple is bigger than blue')
-        amountBalls[5]=amountBalls[5]+10;
-        amountBalls[4]=amountBalls[4]+5;
-      }
-
-      else if (this.yeargasess[4]==this.yeargasess[5]) {
-        console.log('purple is equal to blue')
-        amountBalls[5]=amountBalls[5]+10;
-        amountBalls[4]=amountBalls[4]+10;
-      }
-
-      else{
-        console.log('blue is bigger than purple');
-        amountBalls[4]=amountBalls[4]+10;
-        amountBalls[5]=amountBalls[5]+5;
-      }
-  
- for (i = 0; i < this.yeargasess.length; i++)
- {
-      this.yeargasess[i] = parseInt(this.yeargasess[i]);
-      var numballs = (newarayyyy[i]) ;
-
-      for (var j = 0; j < numballs; j++)
-      {
-        newnodenum.push(amountBalls[i]);
-        newcolours.push(colors[counter]);
-      }
-      counter = counter +1;
-  }
-  
-  var testing = d3.scale.ordinal().range(newnodenum);
-  var color = d3.scale.ordinal().range(newcolours);
-  
-
-    function runforce(gasSize,colour){
-
-    console.log('running runforce');
-    var svg1=d3.select("svg").remove();
-    var nodes = d3.range(31).map(function() { return {radius: Math.random() * 12 + 50}; });
-    var root = nodes[0];
-    root.radius = 0;
-    root.fixed = true;
-
-    var force = d3.layout.force()
-        .gravity(0.05)
-        .charge(function(d, i) { return i ? 0 : -2000; })
-        .nodes(nodes)
-        .size([1060, 720]);
-
-    force.start();
-
-    console.log(' ADDING new SVG');
-    var svg = d3.select("body").append("svg").attr("width", 1060).attr("height", 720);
-    svg.selectAll("circle").data(nodes.slice(1)).enter().append("circle").attr("r",function(d) {return gasSize(d.index); }).attr("fill", function(d) {return colour(d.index);  })
 
 
-    force.on("tick", function(e) {
-      var q = d3.geom.quadtree(nodes), i = 0, n = nodes.length;
-
-      while (++i < n) q.visit(collide(nodes[i]));
-
-      svg.selectAll("circle")
-          .attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; });
-    });
-
-    svg.on("mousemove", function() {
-      var p1 = d3.mouse(this);
-      root.px = p1[0];
-      root.py = p1[1];
-      force.resume();});
-
-    function collide(node) {
-      var r = node.radius + 16,
-          nx1 = node.x - r,
-          nx2 = node.x + r,
-          ny1 = node.y - r,
-          ny2 = node.y + r;
-      return function(quad, x1, y1, x2, y2) {
-        if (quad.point && (quad.point !== node)) {
-          var x = node.x - quad.point.x,
-              y = node.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y),
-              r = node.radius + quad.point.radius;
-          if (l < r) {
-            l = (l - r) / l * .5;
-            node.x -= x *= l;
-            node.y -= y *= l;
-            quad.point.x += x;
-            quad.point.y += y;
-          }
-        }
-        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-      };
-  }
-}
-
-  runforce(testing,color);
-}
-}
- 
-
-  d3.csv("https://raw.githubusercontent.com/svparmar/summative/master/sum1/eve2.csv",function(data) {
-
-    var headerNames = d3.keys(data[0]);
-    headerNames.splice(0,0,'Year');
-    headerNames.pop();
-
-    console.log('headerNames'); 
-    console.log(headerNames); 
-    
-    d3.select("#dropdown")
-        .selectAll('myOptions')
-        .data(headerNames)
-        .enter().append('option').text(function (d) { return d; })
-        .attr("value", function (dropdowndata) { return dropdowndata; })
-
-    d3.select("#dropdown").on("change",function(d){
-    var yeardata = d3.select(this).property('value');
-    var yeargases = (data.map(function(d) { return d[yeardata] }));
-   
-    console.log(yeardata);
-
-    let b = new ballMaker(yeardata , yeargases);
-    b.runSVG();
-
-    });
-  });
-</script> -->
